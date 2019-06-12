@@ -7,28 +7,38 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-class DateRange {
-    private Date firstDate, secondDate, signUpDate, formDate;
-    private Calendar anniversaryDate, formDateCalender, minDate;
-    int signUpYear;
 
-    DateRange(Date signUpDate, Date formDate) {
+class DateRange {
+    private Date firstDate, lastDate, signUpDate, currDate;
+    private Calendar anniversaryDate, currDateCalender, minDate;
+    private int signUpYear;
+
+    DateRange(Date signUpDate, Date currDate) {
 
         this.signUpDate = signUpDate;
+        this.currDate = currDate;
 
-        this.formDate = formDate;
+        //to calculate range of date (+-30 days from this date)
         anniversaryDate = Calendar.getInstance();
-
         anniversaryDate.setTime(signUpDate);
+
+        //year of firstSignUp
         signUpYear = anniversaryDate.get(Calendar.YEAR);
-        formDateCalender = Calendar.getInstance();
-        formDateCalender.setTime(formDate);
-        anniversaryDate.set(Calendar.YEAR, formDateCalender.get(Calendar.YEAR));
+        
+        currDateCalender = Calendar.getInstance();
+        currDateCalender.setTime(currDate);
+        
+        anniversaryDate.set(Calendar.YEAR, currDateCalender.get(Calendar.YEAR));
+
+        //subtract 30 days to get firstDate of range
         anniversaryDate.add(Calendar.DATE, -30);
         firstDate = anniversaryDate.getTime();
 
+        //getting lastDate of range
         anniversaryDate.add(Calendar.DATE, +60);
-        secondDate = anniversaryDate.getTime();
+        lastDate = anniversaryDate.getTime();
+
+
         minDate = Calendar.getInstance();
         minDate.setTime(firstDate);
         minDate.set(Calendar.YEAR, signUpYear+1);
@@ -40,20 +50,28 @@ class DateRange {
         return firstDate;
     }
 
-    public Date getSecondDate() {
-        return secondDate;
+    public Date getlastDate() {
+        return lastDate;
     }
 
     public void computeRange() {
-        if (formDate.compareTo(secondDate) < 0 && formDate.compareTo(firstDate) > 0) {
-            secondDate = formDate;
+        //if current date before lastdate of range
+        if (currDate.compareTo(lastDate) < 0 && currDate.compareTo(firstDate) > 0) {
+            lastDate = currDate;
 
-        } else if (formDate.compareTo(firstDate) <= 0) {
+
+        }
+        //if current date equal or before first date of range then there is no range formed
+        else if (currDate.compareTo(firstDate) <= 0) {
             firstDate = null;
-            secondDate = null;
-        } else if (minDate.getTime().compareTo(firstDate) > 0) {
+            lastDate = null;
+
+
+        }
+        //form filling range starts one year after signUpYear before that no range formed
+        else if (minDate.getTime().compareTo(firstDate) > 0) {
             firstDate = null;
-            secondDate = null;
+            lastDate = null;
         }
 
 
@@ -63,18 +81,28 @@ class DateRange {
 
 
 public class Assignment4 {
+    
+    
     public static void main(String[] args) throws ParseException {
-        String signUpDate, formDate;
+        String signUpDate, currDate;
 
 
         Scanner sc = new Scanner(System.in);
         int testCases = sc.nextInt();
+        
+        //array of class to store range of date for each testcases
+        
         DateRange dateRangeArray[] = new DateRange[testCases];
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
+        //inputting the signUp date and currDate for each testcase
+        
         for (int i = 0; i < testCases; i++) {
             signUpDate = sc.next();
-            formDate = sc.next();
-            DateRange dr = new DateRange(dateFormat.parse(signUpDate), dateFormat.parse(formDate));
+            currDate = sc.next();
+            
+            //class of store range of date
+            DateRange dr = new DateRange(dateFormat.parse(signUpDate), dateFormat.parse(currDate));
 
             dr.computeRange();
             dateRangeArray[i] = dr;
@@ -84,7 +112,8 @@ public class Assignment4 {
             if (dateRangeArray[i].getFirstDate() == null) {
                 System.out.println("No range");
             } else {
-                System.out.println(dateFormat.format(dateRangeArray[i].getFirstDate()) + " " + dateFormat.format(dateRangeArray[i].getSecondDate()));
+                //changing date into string
+                System.out.println(dateFormat.format(dateRangeArray[i].getFirstDate()) + " " + dateFormat.format(dateRangeArray[i].getlastDate()));
             }
         }
 

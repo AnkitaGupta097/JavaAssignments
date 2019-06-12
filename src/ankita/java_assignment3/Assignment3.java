@@ -73,7 +73,7 @@ public class Assignment3 {
 
         //inputing the hostname
         String host = sc.next();
-        System.out.println(computeMean(host));
+        System.out.println(computeMean(host)+ " milliSec");
 
 
     }
