@@ -2,6 +2,16 @@ package ankita.java_incremental4;
 
 import java.lang.Exception;
 
+/*
+*
+* Create three new types of exceptions. Write a class with a method that throws all three.
+* In main( ), call the method but only use a single catch clause that will catch all three types of exceptions.
+* Add a finally clause and verify that your finally clause is executed, even if a NullPointerException is thrown.
+
+ */
+
+
+//three new user defined exception
 class NewException extends Exception{
 
 NewException(String str)
@@ -41,6 +51,9 @@ class NewExceptionThree extends Exception{
     }
 
 }
+
+//class having a method throwing all three types of exception
+
 public class ThrowException
 {
 void method1(String st) throws NewException,NewExceptionTwo,NewExceptionThree
@@ -57,6 +70,9 @@ void method1(String st) throws NewException,NewExceptionTwo,NewExceptionThree
 
 
 }
+
+
+//main method handling all three types of exception by one catch block and excecuted finally block
 
     public static void main(String[] args) {
 
