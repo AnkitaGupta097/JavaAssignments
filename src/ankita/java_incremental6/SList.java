@@ -1,7 +1,14 @@
 package ankita.java_incremental6;
 
+
+
+//genric class which create linklist
 class SList<T> {
-    Link head;
+
+    //store head of linklist
+  private   Link head;
+
+  //private inner class that generate nodes
     private class Link {
 
 
@@ -15,6 +22,8 @@ class SList<T> {
 
 
     }
+
+    //Iterator class used to iterate through linked list
     class  SListIteratorImplementor implements SListIterator<T>{
 private Link curr,prev;
 
@@ -46,6 +55,8 @@ return false;
         public void insert(T data)
         {
 Link newNode=new Link(data);
+
+//inserting at starting
         if(prev==curr)
         {
             head=newNode;
@@ -65,13 +76,17 @@ Link newNode=new Link(data);
         @Override
         public void remove() {
     try {
+        //before calling next() method first time exception occured
         if (prev == curr) {
             throw new Exception("no element at current position");
         }
+        //removal of first node
         if (prev == head) {
             head = prev.next;
             prev = head;
-        } else {
+        }
+
+        else {
             Link st = head;
             while (st.next != prev) {
                 st = st.next;
@@ -89,7 +104,7 @@ catch (Exception e)
         }
     }
 
-
+//creade a node with constructor
     SList(T data) {
       head=new Link(data);
     }
@@ -98,7 +113,7 @@ catch (Exception e)
 //empty list
     }
 
-
+//returning object of iterator class
     SListIterator iterator() {
        return new SListIteratorImplementor();
 

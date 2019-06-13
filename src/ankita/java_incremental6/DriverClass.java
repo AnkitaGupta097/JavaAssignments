@@ -1,6 +1,15 @@
 package ankita.java_incremental6;
 
-import java.util.List;
+
+
+/*
+ *Create a generic, singly linked list class called SList,
+ * Each Link object in the list should contain a reference to the next element in the list, but not the previous one
+ * Create your own SListIterator which, again for simplicity, does not implement ListIterator.
+ * The only method in SList other than toString( ) should be iterator( ), which produces an SListIterator.
+ * The only way to insert and remove elements from an SList is through SListIterator. Write code to demonstrate SList.
+
+ */
 
 public class DriverClass {
     public static void main(String[] args) {
@@ -32,6 +41,7 @@ it3.remove();
         {
             System.out.println(it3.next());
         }
+
 
     }
 }
